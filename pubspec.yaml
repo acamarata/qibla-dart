@@ -1,0 +1,21 @@
+name: qibla
+description: >
+  Qibla direction, great-circle path, and haversine distance for Dart and
+  Flutter. Pure math, zero dependencies. Computes bearing to the Ka'bah
+  from any point on Earth.
+version: 1.0.0
+repository: https://github.com/acamarata/qibla-dart
+issue_tracker: https://github.com/acamarata/qibla-dart/issues
+topics:
+  - qibla
+  - islamic
+  - compass
+  - geodesic
+  - geolocation
+
+environment:
+  sdk: ^3.7.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.25.8

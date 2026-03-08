@@ -68,6 +68,10 @@ Haversine distance between two points in kilometers (spherical Earth approximati
 | `kaabaLng`     | 39.826150 | Ka'bah center longitude (degrees east) |
 | `earthRadiusKm`| 6371      | WGS-84 volumetric mean radius          |
 
+## Architecture
+
+All calculations use the forward azimuth formula from spherical trigonometry. Great-circle paths use spherical linear interpolation (Slerp). Distance uses the haversine formula. The Ka'bah coordinates are fixed constants verified against published GPS surveys.
+
 ## Compatibility
 
 Dart 3.7+. Works with Flutter and standalone Dart applications.
@@ -76,6 +80,10 @@ Dart 3.7+. Works with Flutter and standalone Dart applications.
 
 - [qibla](https://www.npmjs.com/package/qibla) (npm) - The TypeScript version of this package.
 - [pray-calc](https://github.com/acamarata/pray-calc) - Islamic prayer times calculator.
+
+## Acknowledgments
+
+Ka'bah coordinates verified against published GPS surveys and cross-checked with satellite imagery. Spherical trigonometry formulas follow the standard forward azimuth derivation used in aviation and geodesy.
 
 ## License
 

@@ -17,5 +17,5 @@ print(km); // ~9634
 
 ## Pages
 
-- [API Reference](API-Reference) — Full function and constant reference
-- [Architecture](Architecture) — Spherical trigonometry and Slerp implementation
+- [API Reference](API-Reference): Full function and constant reference
+- [Architecture](Architecture): Spherical trigonometry and Slerp implementation

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.1 - 2026-05-25
+
+### Verified
+
+- Full surface-area parity audit against `@acamarata/qibla` (JS reference package).
+- All five public functions (`qiblaAngle`, `compassDir`, `compassName`,
+  `qiblaGreatCircle`, `distanceKm`) and three exported constants (`kaabaLat`,
+  `kaabaLng`, `earthRadiusKm`) confirmed present with idiomatic Dart typed
+  signatures and matching semantics. No gaps found.
+- 48 tests pass; no changes to runtime code required.
+
 ## 1.0.0 - 2026-03-08
 
 ### Added

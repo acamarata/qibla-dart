@@ -3,7 +3,7 @@ description: >
   Qibla direction, great-circle path, and haversine distance for Dart and
   Flutter. Pure math, zero dependencies. Computes bearing to the Ka'bah
   from any point on Earth.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/acamarata/qibla-dart
 issue_tracker: https://github.com/acamarata/qibla-dart/issues
 topics:

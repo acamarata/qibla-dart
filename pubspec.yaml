@@ -7,7 +7,6 @@ version: 1.0.1
 homepage: https://github.com/acamarata/qibla-dart
 repository: https://github.com/acamarata/qibla-dart
 issue_tracker: https://github.com/acamarata/qibla-dart/issues
-publisher: ariccamarata.com
 topics:
   - qibla
   - islamic

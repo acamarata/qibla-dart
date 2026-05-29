@@ -1,9 +1,12 @@
 # Changelog
 
-## [1.0.1] - 2026-05-25
+## 1.0.1
 
-### Added
-- Initial public release of Dart Qibla direction library
-- `calcQibla(lat, lng)` function returning bearing in degrees
-- 48 tests passing across edge cases
-- Pure Dart implementation with no native dependencies
+- Surface-area parity audit with qibla-js counterpart.
+- Repository structure and documentation alignment.
+
+## 1.0.0
+
+- Initial release: Qibla direction, great-circle distance, and haversine math for Dart and Flutter.
+- Zero dependencies.
+- Exports: `qiblaAngle`, `compassDir`, `distanceKm`, `kaabaLat`, `kaabaLng`.

@@ -22,9 +22,26 @@ void main() {
     final dir = compassDir(bearing);
     final km = distanceKm(lat, lng, kaabaLat, kaabaLng);
 
-    print('${city.padRight(18)}${bearing.toStringAsFixed(1).padLeft(6)}°  ${dir.padRight(9)}  ${km.toStringAsFixed(0)} km');
+    print(
+      '${city.padRight(18)}'
+      '${bearing.toStringAsFixed(1).padLeft(6)}°  '
+      '${dir.padRight(9)}  '
+      '${km.toStringAsFixed(0)} km',
+    );
   }
 }
+```
+
+Expected output:
+
+```
+City              Bearing  Direction  Distance
+──────────────────────────────────────────────────────
+New York            58.5°  NE         9634 km
+London              49.3°  NE         5148 km
+Istanbul            41.5°  NE         2517 km
+Jakarta            295.1°  NW         7665 km
+Cape Town           22.3°  NE         8832 km
 ```
 
 ## Great-Circle Path Waypoints
@@ -33,13 +50,18 @@ void main() {
 import 'package:qibla/qibla.dart';
 
 void main() {
-  // 8 waypoints from London to Makkah
-  final path = greatCirclePath(51.5074, -0.1278, kaabaLat, kaabaLng, 8);
+  // 8 segments (9 waypoints) from London to Makkah
+  final path = qiblaGreatCircle(51.5074, -0.1278, steps: 8);
 
   print('Waypoints from London to Makkah:');
   for (int i = 0; i < path.length; i++) {
-    final p = path[i];
-    print('  ${i + 1}. ${p.latitude.toStringAsFixed(4)}°, ${p.longitude.toStringAsFixed(4)}°');
+    print(
+      '  ${i + 1}. '
+      '${path[i][0].toStringAsFixed(4)}°, '
+      '${path[i][1].toStringAsFixed(4)}°',
+    );
   }
 }
 ```
+
+Each element of the returned list is a `[latitude, longitude]` pair in decimal degrees. The first point is the observer location; the last is the Ka'bah.

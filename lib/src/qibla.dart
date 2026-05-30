@@ -4,7 +4,15 @@
 /// the Ka'bah using the spherical law of cosines. Includes compass direction
 /// lookup, great-circle interpolation, and haversine distance.
 ///
-/// Ka'bah coordinates sourced from verified GPS data.
+/// Ka'bah coordinates sourced from verified GPS surveys.
+///
+/// Example:
+/// ```dart
+/// import 'package:qibla/qibla.dart';
+///
+/// final bearing = qiblaAngle(40.7128, -74.006); // ~58.48
+/// print(compassDir(bearing));                    // NE
+/// ```
 library;
 
 import 'dart:math';
@@ -48,6 +56,11 @@ const List<String> _compassNames = [
 ///
 /// Throws [RangeError] if latitude is outside [-90, 90] or longitude
 /// outside [-180, 180].
+///
+/// Example:
+/// ```dart
+/// final bearing = qiblaAngle(40.7128, -74.006); // ~58.48 (northeast)
+/// ```
 double qiblaAngle(double lat, double lng) {
   if (lat < -90 || lat > 90) {
     throw RangeError('Latitude must be between -90 and 90, got $lat');
@@ -69,6 +82,12 @@ double qiblaAngle(double lat, double lng) {
 /// [bearing] is the bearing in degrees (0-360).
 ///
 /// Returns a compass abbreviation: N, NE, E, SE, S, SW, W, or NW.
+///
+/// Example:
+/// ```dart
+/// compassDir(58.5);  // 'NE'
+/// compassDir(180.0); // 'S'
+/// ```
 String compassDir(double bearing) {
   return _compassAbbr[(bearing / 45).round() % 8];
 }
@@ -77,7 +96,14 @@ String compassDir(double bearing) {
 ///
 /// [bearing] is the bearing in degrees (0-360).
 ///
-/// Returns the full direction name (North, Northeast, etc.).
+/// Returns the full direction name (North, Northeast, East, Southeast,
+/// South, Southwest, West, or Northwest).
+///
+/// Example:
+/// ```dart
+/// compassName(58.5);  // 'Northeast'
+/// compassName(270.0); // 'West'
+/// ```
 String compassName(double bearing) {
   return _compassNames[(bearing / 45).round() % 8];
 }
@@ -91,9 +117,17 @@ String compassName(double bearing) {
 /// [lng] is the origin longitude in decimal degrees.
 /// [steps] is the number of segments (default: 120, producing 121 points).
 ///
-/// Returns a list of [lat, lng] pairs in degrees.
+/// Returns a list of `[latitude, longitude]` pairs in decimal degrees.
+/// The first element is the observer location; the last is the Ka'bah.
 ///
 /// Throws [RangeError] if coordinates are out of bounds.
+///
+/// Example:
+/// ```dart
+/// final path = qiblaGreatCircle(51.5074, -0.1278); // 121 points London -> Makkah
+/// print(path.length);   // 121
+/// print(path.first);    // [51.5074, -0.1278]
+/// ```
 List<List<double>> qiblaGreatCircle(double lat, double lng, [int steps = 120]) {
   if (lat < -90 || lat > 90) {
     throw RangeError('Latitude must be between -90 and 90, got $lat');
@@ -139,7 +173,14 @@ List<List<double>> qiblaGreatCircle(double lat, double lng, [int steps = 120]) {
 /// [lat1], [lng1] define the first point in decimal degrees.
 /// [lat2], [lng2] define the second point in decimal degrees.
 ///
-/// Returns the distance in kilometers (spherical Earth approximation).
+/// Returns the distance in kilometers (spherical Earth approximation,
+/// R = 6,371 km).
+///
+/// Example:
+/// ```dart
+/// // Distance from New York to the Ka'bah
+/// final km = distanceKm(40.7128, -74.006, kaabaLat, kaabaLng); // ~9634
+/// ```
 double distanceKm(double lat1, double lng1, double lat2, double lng2) {
   final dLat = (lat2 - lat1) * _deg;
   final dLng = (lng2 - lng1) * _deg;

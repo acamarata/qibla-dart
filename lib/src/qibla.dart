@@ -155,6 +155,41 @@ List<List<double>> qiblaGreatCircle(double lat, double lng, [int steps = 120]) {
     ];
   }
 
+  // Antipodal degeneracy. The interpolation below divides by sin(d), and for a point
+  // diametrically opposite the Kaaba d is pi, where sin(d) is about 1.2e-16 rather than an
+  // exact zero. The weights explode, x/y/z cancel to roughly zero, and atan2(0, 0) returns 0
+  // — so seven of the 121 points came back as exactly [0, 0], the Gulf of Guinea, nowhere
+  // near the route. A silent plausible coordinate is worse than a loud failure, because
+  // nothing downstream can tell it apart from a real one.
+  //
+  // Through two antipodal points there are infinitely many great circles, so no answer is
+  // uniquely correct and none is continuous from every direction: approach from the north and
+  // the limiting path runs over the north pole, from the south over the south. The
+  // singularity is real and cannot be defined away.
+  //
+  // Every such circle is a meridian pair, so the path is walked along one directly rather
+  // than interpolated. Nudging the endpoint and reusing the formula below was tried and
+  // rejected: it drives the weights to about 1e9, and the resulting cancellation left this
+  // port and the JavaScript one 9 cm apart. Walking the meridian is exact, needs no epsilon,
+  // and is identical in both.
+  if (sin(d).abs() < 1e-9) {
+    final antipodal = <List<double>>[];
+    for (var i = 0; i <= steps; i++) {
+      // Travel f * pi radians south along this meridian, crossing the pole to come up the
+      // far side. At f = 1 this lands exactly on the Kaaba, by construction.
+      var phi = phi1 - (i / steps) * pi;
+      var lam = lam1;
+      if (phi < -pi / 2) {
+        phi = -pi - phi;
+        lam = lam1 + pi;
+      }
+      // Wrap longitude back into [-180, 180].
+      final lngDeg = ((lam / _deg + 540) % 360) - 180;
+      antipodal.add([phi / _deg, lngDeg]);
+    }
+    return antipodal;
+  }
+
   final points = <List<double>>[];
   for (var i = 0; i <= steps; i++) {
     final f = i / steps;
